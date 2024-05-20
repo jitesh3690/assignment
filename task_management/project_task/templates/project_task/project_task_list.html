@@ -1,0 +1,10 @@
+{% extends 'project_task/base.html' %}
+
+{% block content %}
+  <h2>Tasks for Project: {{ project.name }}</h2>
+  <ul>
+    {% for task in object_list %}
+      <li>{{ task.name }} - {{ task.status }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
