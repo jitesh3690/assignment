@@ -1,0 +1,25 @@
+note : make sure you have installed python/pip and git on your system
+
+step1 : clone repo
+git clone <repo .git url>
+
+step2 : move to git repo
+cd <git repo name>
+
+step3 : create virtualenv
+python -m venv <venv_name>
+
+step4 : activate virtual env
+<venv_name>/Scripts/activate
+
+step5 : install Packages from requirments.txt file
+pip install -r requirements.txt
+
+step6 : move to Django main project folder
+cd task_management
+note : task_management is djangoproject name
+
+step7 : run the project
+python manage.py runserver
+
+check if the project is running on your dev server
