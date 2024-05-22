@@ -1,8 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.http import HttpResponseNotFound
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Project, Task, Client
 from django.urls import reverse_lazy
 from django.utils import timezone
+
+def custom_404_view(request, exception):
+    return HttpResponseNotFound('<h1>Page not found</h1>')
+
+def homeView(request):
+    return render(request, 'project_task/home.html')
 
 class TaskListView(ListView):
     model = Task
@@ -20,15 +27,24 @@ class TaskDeleteView(DeleteView):
 
 class TaskUpdateView(UpdateView):
     model = Task
-    fields = ['status']
+    fields = ['status']    #field to edit
     template_name = 'project_task/task_status.html'
     success_url = reverse_lazy('task_list')
+
+def task_detail(request, pk):
+    try:
+        task = Task.objects.get(pk=pk)
+    except Task.DoesNotExist:
+        return HttpResponse('No task with the given id', status=404)
     
+    context = {'task': task}
+    return render(request, 'project_task/task_detail.html', context)
 
 class ProjectListView(ListView):
     model = Project
     template_name = 'project_task/project_list.html'
     
+    #modifying queryset to get project which are not ended (end date having future date)
     def get_queryset(self):
         return Project.objects.filter(end_date__gte=timezone.now())
 
@@ -47,15 +63,27 @@ class ProjectDeleteView(DeleteView):
     model = Project
     success_url = reverse_lazy('project_list')
 
-class ProjectDetailView(DetailView):
-    model = Project
-    template_name = 'project_task/project_detail.html'
+def project_detail(request, pk):
+    try:
+        project = Project.objects.get(pk=pk)
+    except Project.DoesNotExist:
+        return HttpResponse('No project with the given id', status=404)
+    
+    context = {'project': project}
+    return render(request, 'project_task/project_detail.html', context)
 
-class ProjectTaskListView(ListView):
-    model = Task
-    template_name = 'project_task/project_task_list.html'
-
-    def get_queryset(self):
-        self.project = get_object_or_404(Project, pk=self.kwargs['pk'])
-        return Task.objects.filter(project=self.project)
+def project_task_list(request, pk):
+    try:
+        project = Project.objects.get(pk=pk)
+    except Project.DoesNotExist:
+        return HttpResponse('No project with the given id', status=404)
+    
+    tasks = Task.objects.filter(project=project)
+    if not tasks:
+        tasks = None
+    context = {
+        'project': project,
+        'tasks': tasks,
+    }
+    return render(request, 'project_task/project_task_list.html', context)
 

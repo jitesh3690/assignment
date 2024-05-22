@@ -1,14 +1,38 @@
+<!-- single project detail view with task listed in table -->
+
 {% extends 'project_task/base.html' %}
 
+{% block title %}Project Detail{% endblock %}
+
 {% block content %}
-  <h2>{{ object.name }}</h2>
-  <p>Description: {{ object.description }}</p>
-  <p>Client: {{ object.client }}</p>
-  <p>End Date: {{ object.end_date }}</p>
-  <h3>Tasks</h3>
-  <ul>
-    {% for task in object.task_set.all %}
-      <li>{{ task.name }} - {{ task.status }}</li>
-    {% endfor %}
-  </ul>
+<div class="container">
+  <h2 class="project-name">{{ project.name }}</h2>
+  <p class="description">Description: {{ project.description }}</p>
+  <p class="client">Client: {{ project.client }}</p>
+  <p class="end-date">Start Date: {{ project.start_date }}</p>
+  <p class="end-date">End Date: {{ project.end_date }}</p>
+  {% if project.task.exists %}
+  <h3 class="tasks-heading">Tasks</h3>
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>Task Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in project.task.all %}
+          <tr>
+            <td>{{ task.name }}</td>
+            <td>{{ task.status }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No tasks for this project</p>
+    {% endif %}
+    <a class="btn-create" href="{% url 'project_task_list' pk=project.pk %}">View Task List</a>
+</div>
+
 {% endblock %}

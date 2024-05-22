@@ -1,14 +1,33 @@
+<!-- listing all the projects -->
 {% extends 'project_task/base.html' %}
 
+{% block title %}Project List{% endblock %}
+
 {% block content %}
-  <h2>All Projects</h2>
-  <ul>
+<h2>Projects Which are not Ended</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Client</th>
+      <th>Actions</th>
+      <th>End Date</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for project in object_list %}
-      <li>{{ project.name }} - {{ project.client }}
-        <a href="{% url 'project_detail' project.pk %}">View</a>
-        <a href="{% url 'project_delete' project.pk %}">Delete</a>
-      </li>
+    <tr>
+      <td>{{ project.name }}</td>
+      <td>{{ project.client }}</td>
+      <td>
+        <a class="btn-view" href="{% url 'project_detail' project.pk %}">View</a>
+        <a class="btn-delete" href="{% url 'project_delete' project.pk %}">Delete</a>
+      </td>
+      <td>{{ project.end_date }}</td>
+    </tr>
     {% endfor %}
-  </ul>
-  <a href="{% url 'project_create' %}">Create New Project</a>
+  </tbody>
+</table>
+<a class="btn-create" href="{% url 'project_create' %}">Create New Project</a>
+
 {% endblock %}

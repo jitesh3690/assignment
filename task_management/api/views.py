@@ -4,6 +4,9 @@ from project_task.models import Project, Task
 from .serializers import ProjectListSerializer, ProjectDetailSerializer, TaskSerializer
 from rest_framework.pagination import PageNumberPagination
 
+def api_home(request):
+    return render(request, 'project_task/api_home.html')
+
 class FiveItemsPerPagePagination(PageNumberPagination):
     page_size = 2
     page_size_query_param = 'page_size'

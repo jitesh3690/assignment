@@ -1,0 +1,29 @@
+{% extends 'project_task/base.html' %}
+
+{% block title %}Api Home{% endblock %}
+
+{% block content %}
+<h1>Weclome to API page</h1>
+<table>
+    <tr>
+        <th>Routes</th>
+        <th>Usage</th>
+    </tr>
+    <tr>
+        <td><a href="{% url 'project-list' %}" class="btn">Project List</a></td>
+        <td>GET all projects</td>
+    </tr>
+    <tr>
+        <td><a href="{% url 'project-detail' pk=1 %}" class="btn">Project Detail</a></td>
+        <td>GET/DELETE/PUT Project(default pk=1)</td>
+    </tr>
+    <tr>
+        <td><a href="{% url 'task-list' %}" class="btn">Task List</a></td>
+        <td>GET all tasks</td>
+    </tr>
+    <tr>
+        <td><a href="{% url 'task-detail' pk=1 %}" class="btn">Task Detail</a></td>
+        <td>GET/DELETE/PUT Task (default pk=1)</td>
+    </tr>
+</table>
+{% endblock %}
