@@ -1,0 +1,18 @@
+<!-- individual project with list of tasks -->
+
+{% extends 'project_task/base.html' %}
+
+{% block title %}Project with tasks{% endblock %}
+
+{% block content %}
+<h2>Tasks for Project: {{ project.name }}</h2>
+<ul>
+  {% if tasks is not None %}
+    {% for task in tasks %}
+      <li>{{ task.name }} - {{ task.status }}</li><br>
+    {% endfor %}
+  {% else %}
+  <li>No tasks for this project</li>
+  {% endif %}
+</ul>
+{% endblock %}

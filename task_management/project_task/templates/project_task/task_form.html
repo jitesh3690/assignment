@@ -1,0 +1,21 @@
+<!-- task creation form -->
+{% extends 'project_task/base.html' %}
+
+{% block title %}Task Form{% endblock %}
+
+{% block content %}
+<div class="task-container">
+  <h2>Create New Task</h2>
+  <form method="post" class="task-form">
+    {% csrf_token %}
+    <div class="form-group">
+      {% for field in form %}
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>
+{% endblock %}

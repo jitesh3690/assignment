@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'project_task/base.css' %}">
+    <title>{% block title %}Task Management System{% endblock %}</title>
+</head>
+<body>
+    <header>
+          <ul class="navbar">
+            <li><a class="active" href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'task_list' %}">All Tasks</a></li>
+            <li><a href="{% url 'project_list' %}">All Projects</a></li>
+            <li><a href="{% url 'api_home' %}">Api Routes</a></li>
+          </ul>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+   
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!-- list of tasks with feture to edit, delete, view -->
+{% extends 'project_task/base.html' %}
+
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+<h2>All Tasks</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Status</th>
+      <th>Project</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for task in object_list %}
+    <tr>
+      <td>{{ task.name }}</td>
+      <td>{{ task.status }}</td>
+      <td>{{ task.project.name }}</td>
+      <td>
+        <a class="btn-edit" href="{% url 'task_update' task.pk %}">Change Status</a>
+        <a class="btn-delete" href="{% url 'task_delete' task.pk %}">Delete</a>
+        <a class="btn-view" href="{% url 'task_detail' task.pk %}">View</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a class="btn-create" href="{% url 'task_create' %}">Create New Task</a>
+{% endblock %}
